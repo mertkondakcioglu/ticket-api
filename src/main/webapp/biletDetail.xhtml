@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Bilet Detay</title>
+    <h:outputStylesheet name="css/style.css" />
+</h:head>
+<h:body>
+    <h:form styleClass="formStyle">
+        <p:panel>
+            <p:dataTable var="biletler" value="#{biletView.bilet}">
+                <p:column headerText="ID" width="10%">
+                    <h:outputText value="#{biletler.id}"/>
+                </p:column>
+                <p:column headerText="Müşteri İsim">
+                    <h:outputText value="#{biletler.musteri_isim}"/>
+                </p:column>
+                <p:column headerText="Fiyat">
+                    <h:outputText value="#{biletler.fiyat}"/>
+                </p:column>
+                <p:column headerText="Uçuş Id">
+                    <h:outputText value="#{biletler.ucus_id}"/>
+                </p:column>
+                <p:column width="10%">
+                    <p:commandButton icon="pi pi-arrow-left" action="#{biletView.biletMainPage}" update="@form" process="@this"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+    <br/><br/><br/>
+    <h:graphicImage name="images/kedi.jpg" style="width: 200px;height: 200px;"/>
+</h:body>
+</html>

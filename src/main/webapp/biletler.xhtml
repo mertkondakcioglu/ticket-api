@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Bilet Ekranı</title>
+    <h:outputStylesheet name="css/style.css" />
+</h:head>
+<h:body>
+    <h:form styleClass="formStyle">
+        <p:panel>
+            <f:facet name="header">
+                Yeni Bilet
+            </f:facet>
+            <h:panelGrid columns="2">
+                <p:outputLabel value="Müşteri İsim"/>
+                <p:inputText value="#{biletView.bilet.musteri_isim}"
+                             required="true"/>
+                <p:outputLabel value="Fiyat"/>
+                <p:inputText value="#{biletView.bilet.fiyat}"
+                             required="true"/>
+                <p:outputLabel value="Uçuş Id"/>
+                <p:inputText value="#{biletView.bilet.ucus_id}"
+                             required="true"/>
+                <p:outputLabel/>
+                <p:commandButton value="Ekle" action="#{biletView.biletEkle()}"
+                                 update="@all" process="@all"/>
+            </h:panelGrid>
+        </p:panel>
+    </h:form>
+
+    <br/> <br/> <br/> <br/> <br/>
+
+    <h:form id="dbForm" styleClass="formStyle">
+        <p:panel>
+            <f:facet name="header">
+                Biletler
+            </f:facet>
+            <p:dataTable var="biletler" value="#{biletView.biletler}"
+                         rows="5" paginator="true" rowIndexVar="index" id="datatable">
+                <p:column headerText="No" width="10%">
+                    <h:commandLink value="#{index + 1}" action="#{biletView.biletDetail(biletler.id)}"
+                                   immediate="true"/>
+                </p:column>
+
+                <p:column headerText="Müşteri İsim">
+                    <h:outputText value="#{biletler.musteri_isim}"/>
+                </p:column>
+
+                <p:column headerText="Fiyat">
+                    <h:outputText value="#{biletler.fiyat}"/>
+                </p:column>
+
+                <p:column headerText="Uçuş Id">
+                    <h:outputText value="#{biletler.ucus_id}"/>
+                </p:column>
+
+                <p:column headerText="Değiştir" width="10%">
+                    <p:commandButton icon="pi pi-pencil" action="#{biletView.biletGetWithId(biletler.id)}"
+                                     onclick="PF('biletUpdate').show()" update=":formUpdate:panelUpdate"/>
+                </p:column>
+
+                <p:column headerText="Sil" width="10%">
+                    <p:commandButton icon="pi pi-times" action="#{biletView.biletSil(biletler.id)}" update="@form">
+                        <p:confirm header="Doğrulama" message="Bunu silmek istediğinden emin misin?"
+                                   icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="false">
+        <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+        <p:commandButton value="Hayır" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+    </p:confirmDialog>
+
+    <p:dialog header="Bilet Değiştir" widgetVar="biletUpdate" modal="true" closable="false">
+        <h:form id="formUpdate">
+            <p:panel id="panelUpdate">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Müşteri İsim"/>
+                    <p:inputText value="#{biletView.bilet.musteri_isim}"
+                                 required="true"/>
+                    <p:outputLabel value="Fiyat"/>
+                    <p:inputText value="#{biletView.bilet.fiyat}"
+                                 required="true"/>
+                    <p:outputLabel value="Uçuş Id"/>
+                    <p:inputText value="#{biletView.bilet.ucus_id}"
+                                 required="true"/>
+
+                    <p:commandButton value="İptal Et" action="#{biletView.biletMainPage()}" immediate="true"
+                                     style="float: right;"/>
+                    <p:commandButton value="Değiştir" action="#{biletView.biletDegistir()}"
+                                     update=":dbForm:datatable :formUpdate:panelUpdate"
+                                     process="@all" style="float: right;"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </p:dialog>
+</h:body>
+</html>
