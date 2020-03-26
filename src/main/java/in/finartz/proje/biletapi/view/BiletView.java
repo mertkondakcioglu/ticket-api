@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.util.List;
 
@@ -48,12 +49,14 @@ public class BiletView {
     public void biletSil(int id) {
         biletService.delete(id);
         biletGetir();
+        FacesContext.getCurrentInstance().addMessage(null, new javax.faces.application.FacesMessage("Silme işlemi başarılı!"));
     }
 
     public void biletEkle() {
         biletService.save(bilet);
         bilet = new Bilet();
         biletGetir();
+        FacesContext.getCurrentInstance().addMessage(null, new javax.faces.application.FacesMessage("Ekleme işlemi başarılı!"));
     }
 
     public void biletGetWithId(int id) {
@@ -65,11 +68,12 @@ public class BiletView {
         bilet = new Bilet();
         PrimeFaces.current().executeScript("PF('biletUpdate').hide()");
         biletGetir();
+        FacesContext.getCurrentInstance().addMessage(null, new javax.faces.application.FacesMessage("Güncelleme işlemi başarılı!"));
     }
 
     public String biletDetail(int id) {
         bilet = biletService.get(id);
-        return "biletDetail?faces-redirect=true";
+        return "biletDetail?faces-redirect=true&includeViewParams=true";
     }
 
     public String biletMainPage() {

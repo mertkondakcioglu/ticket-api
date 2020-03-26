@@ -2,7 +2,6 @@ package in.finartz.proje.biletapi.dao;
 
 import java.util.List;
 
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
@@ -37,7 +36,6 @@ public class BiletDAOImpl implements BiletDAO {
 	public void save(Bilet bilet) {
 		Session currentSession = entityManager.unwrap(Session.class);
 		currentSession.save(bilet);
-		FacesContext.getCurrentInstance().addMessage(null, new javax.faces.application.FacesMessage("Ekleme işlemi başarılı!"));
 	}
 
 	@Override
@@ -45,14 +43,12 @@ public class BiletDAOImpl implements BiletDAO {
 		Session currentSession = entityManager.unwrap(Session.class);
 		Bilet biletObj = currentSession.get(Bilet.class, id);
 		currentSession.delete(biletObj);
-		FacesContext.getCurrentInstance().addMessage(null, new javax.faces.application.FacesMessage("Silme işlemi başarılı!"));
 	}
 
 	@Override
 	public void update(Bilet bilet) {
 		Session currentSession = entityManager.unwrap(Session.class);
 		currentSession.update(bilet);
-		FacesContext.getCurrentInstance().addMessage(null, new javax.faces.application.FacesMessage("Güncelleme işlemi başarılı!"));
 	}
 
 }

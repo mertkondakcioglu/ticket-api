@@ -58,19 +58,18 @@
             <p:dataTable var="biletler" value="#{biletView.biletler}"
                          rows="5" paginator="true" rowIndexVar="index" id="datatable">
                 <p:column headerText="No" width="10%">
-                    <h:commandLink value="#{index + 1}" action="#{biletView.biletDetail(biletler.id)}"
-                                   immediate="true"/>
+                    <h:commandLink value="#{index + 1}" action="#{biletView.biletDetail(biletler.id)}"/>
                 </p:column>
 
-                <p:column headerText="Müşteri İsim">
+                <p:column headerText="Müşteri İsim" sortBy="#{biletler.musteri_isim}">
                     <h:outputText value="#{biletler.musteri_isim}"/>
                 </p:column>
 
-                <p:column headerText="Fiyat">
+                <p:column headerText="Fiyat" sortBy="#{biletler.fiyat}">
                     <h:outputText value="#{biletler.fiyat}"/>
                 </p:column>
 
-                <p:column headerText="Uçuş Id">
+                <p:column headerText="Uçuş Id" sortBy="#{biletler.ucus_id}">
                     <h:outputText value="#{biletler.ucus_id}"/>
                 </p:column>
 
