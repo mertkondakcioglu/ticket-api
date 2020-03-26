@@ -1,2 +1,0 @@
-# biletapi
-Sample for Biletapi
