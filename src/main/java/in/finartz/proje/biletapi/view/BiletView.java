@@ -20,6 +20,7 @@ public class BiletView {
 
     private List<Bilet> biletler;
     private Bilet bilet = new Bilet();
+    private Bilet newBilet = new Bilet();
 
     @PostConstruct
     public void init() {
@@ -41,8 +42,16 @@ public class BiletView {
     public void setBiletler(List<Bilet> biletler) {
         this.biletler = biletler;
     }
+    public Bilet getNewBilet() {
+        return newBilet;
+    }
+
+    public void setNewBilet(Bilet newBilet) {
+        this.newBilet = newBilet;
+    }
 
     public void biletGetir() {
+        newBilet = new Bilet();
         biletler = biletService.get();
     }
 
@@ -53,8 +62,7 @@ public class BiletView {
     }
 
     public void biletEkle() {
-        biletService.save(bilet);
-        bilet = new Bilet();
+        biletService.save(newBilet);
         biletGetir();
         FacesContext.getCurrentInstance().addMessage(null, new javax.faces.application.FacesMessage("Ekleme işlemi başarılı!"));
     }
@@ -65,7 +73,6 @@ public class BiletView {
 
     public void biletDegistir() {
         biletService.update(bilet);
-        bilet = new Bilet();
         PrimeFaces.current().executeScript("PF('biletUpdate').hide()");
         biletGetir();
         FacesContext.getCurrentInstance().addMessage(null, new javax.faces.application.FacesMessage("Güncelleme işlemi başarılı!"));
@@ -73,11 +80,12 @@ public class BiletView {
 
     public String biletDetail(int id) {
         bilet = biletService.get(id);
+        newBilet = new Bilet();
         return "biletDetail?faces-redirect=true&includeViewParams=true";
     }
 
     public String biletMainPage() {
-        bilet = new Bilet();
+        biletGetir();
         return "biletler?faces-redirect=true";
     }
 }

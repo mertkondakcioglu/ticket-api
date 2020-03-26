@@ -11,8 +11,8 @@
 </h:head>
 <h:body>
     <p:messages globalOnly="true" id="sessionMessage" closable="true" />
-    <h:form styleClass="formStyle">
-        <p:panel>
+    <h:form id="insertForm" styleClass="formStyle">
+        <p:panel id="insertPanel">
             <f:facet name="header">
                 Yeni Bilet
             </f:facet>
@@ -21,7 +21,7 @@
             <h:message id="mesajUcusId" for="musteriUcusId" errorStyle="color:red; display:block"/>
             <h:panelGrid columns="2">
                 <p:outputLabel value="Müşteri İsim"/>
-                <p:inputText id="musteriIsim" value="#{biletView.bilet.musteri_isim}"
+                <p:inputText id="musteriIsim" value="#{biletView.newBilet.musteri_isim}"
                              required="true" requiredMessage="Müşteri ismi zorunludur*"
                              validatorMessage="Girilen içerik geçersizdir! (En az iki harf ve sadece a-z A-Z içeren değerleri giriniz)">
                     <p:ajax update="mesajIsim" event="keyup"/>
@@ -29,7 +29,7 @@
                     <f:validateLength maximum="20" minimum="2"/>
                 </p:inputText>
                 <p:outputLabel value="Fiyat"/>
-                <p:inputText id="musteriFiyat" value="#{biletView.bilet.fiyat}"
+                <p:inputText id="musteriFiyat" value="#{biletView.newBilet.fiyat}"
                              required="true" requiredMessage="Bilet fiyatı zorunludur*"
                              validatorMessage="80-20.000 arasında bir değer giriniz!"
                              converterMessage="Girilen içerik geçersizdir! (sadece [0-9] içeren değerleri giriniz)">
@@ -37,7 +37,7 @@
                     <f:validateLongRange minimum="80" maximum="20000"/>
                 </p:inputText>
                 <p:outputLabel value="Uçuş Id"/>
-                <p:inputText id="musteriUcusId" value="#{biletView.bilet.ucus_id}"
+                <p:inputText id="musteriUcusId" value="#{biletView.newBilet.ucus_id}"
                              required="true" requiredMessage="Uçuş id zorunludur*"
                              converterMessage="Girilen içerik geçersizdir! (sadece [0-9] içeren değerleri giriniz)">
                     <p:ajax update="mesajUcusId" event="keyup"/>
@@ -80,7 +80,7 @@
 
                 <p:column headerText="Sil" width="10%">
                     <p:commandButton icon="pi pi-times" action="#{biletView.biletSil(biletler.id)}"
-                                     update="@form :sessionMessage">
+                                     update="@form :sessionMessage :insertForm:insertPanel">
                         <p:confirm header="Doğrulama" message="Bunu silmek istediğinden emin misin?"
                                    icon="pi pi-exclamation-triangle"/>
                     </p:commandButton>
@@ -128,7 +128,7 @@
 
                     <p:commandButton value="İptal Et" action="#{biletView.biletMainPage()}" immediate="true"/>
                     <p:commandButton value="Değiştir" action="#{biletView.biletDegistir()}"
-                                     update=":dbForm:datatable :formUpdate:panelUpdate :sessionMessage"
+                                     update=":dbForm:datatable :formUpdate:panelUpdate :sessionMessage :insertForm:insertPanel"
                                      process="@all"/>
                 </h:panelGrid>
             </p:panel>
