@@ -83,9 +83,4 @@ public class BiletView {
         newBilet = new Bilet();
         return "biletDetail?faces-redirect=true&includeViewParams=true";
     }
-
-    public String biletMainPage() {
-        biletGetir();
-        return "biletler?faces-redirect=true";
-    }
 }

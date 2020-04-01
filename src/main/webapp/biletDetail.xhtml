@@ -32,7 +32,7 @@
                     <h:outputText value="#{biletler.ucus_id}"/>
                 </p:column>
                 <p:column width="10%">
-                    <p:commandButton icon="pi pi-arrow-left" action="#{biletView.biletMainPage}" update="@form" process="@this"/>
+                    <p:commandButton icon="pi pi-arrow-left" action="biletler?faces-redirect=true" update="@form" process="@this"/>
                 </p:column>
             </p:dataTable>
         </p:panel>

@@ -126,7 +126,7 @@
                         <p:ajax update="mesajUUcusId" event="keyup"/>
                     </p:inputText>
 
-                    <p:commandButton value="İptal Et" action="#{biletView.biletMainPage()}" immediate="true"/>
+                    <p:commandButton value="İptal Et" onclick="PF('biletUpdate').hide();" immediate="true"/>
                     <p:commandButton value="Değiştir" action="#{biletView.biletDegistir()}"
                                      update=":dbForm:datatable :formUpdate:panelUpdate :sessionMessage :insertForm:insertPanel"
                                      process="@all"/>
