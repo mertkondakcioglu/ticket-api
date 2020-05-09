@@ -16,34 +16,39 @@
             <f:facet name="header">
                 Yeni Bilet
             </f:facet>
-            <h:message id="mesajIsim" for="musteriIsim" errorStyle="color:red; display:block"/>
-            <h:message id="mesajFiyat" for="musteriFiyat" errorStyle="color:red; display:block"/>
-            <h:message id="mesajUcusId" for="musteriUcusId" errorStyle="color:red; display:block"/>
-            <h:panelGrid columns="2">
+            <h:panelGrid columns="3">
                 <p:outputLabel value="Müşteri İsim"/>
                 <p:inputText id="musteriIsim" value="#{biletView.newBilet.musteri_isim}"
                              required="true" requiredMessage="Müşteri ismi zorunludur*"
                              validatorMessage="Girilen içerik geçersizdir! (En az iki harf ve sadece a-z A-Z içeren değerleri giriniz)">
                     <p:ajax update="mesajIsim" event="keyup"/>
+                    <p:ajax update="mesajIsim" event="blur"/>
                     <f:validateRegex pattern="[a-zA-Z ]+"/>
                     <f:validateLength maximum="20" minimum="2"/>
                 </p:inputText>
+                <h:message id="mesajIsim" for="musteriIsim" errorStyle="color:red;"/>
+
                 <p:outputLabel value="Fiyat"/>
                 <p:inputText id="musteriFiyat" value="#{biletView.newBilet.fiyat}"
                              required="true" requiredMessage="Bilet fiyatı zorunludur*"
                              validatorMessage="80-20.000 arasında bir değer giriniz!"
                              converterMessage="Girilen içerik geçersizdir! (sadece [0-9] içeren değerleri giriniz)">
                     <p:ajax update="mesajFiyat" event="keyup"/>
+                    <p:ajax update="mesajFiyat" event="blur"/>
                     <f:validateLongRange minimum="80" maximum="20000"/>
                 </p:inputText>
+                <h:message id="mesajFiyat" for="musteriFiyat" errorStyle="color:red; float: left;"/>
+
                 <p:outputLabel value="Uçuş Id"/>
                 <p:inputText id="musteriUcusId" value="#{biletView.newBilet.ucus_id}"
                              required="true" requiredMessage="Uçuş id zorunludur*"
                              converterMessage="Girilen içerik geçersizdir! (sadece [0-9] içeren değerleri giriniz)">
                     <p:ajax update="mesajUcusId" event="keyup"/>
+                    <p:ajax update="mesajUcusId" event="blur"/>
                 </p:inputText>
+                <h:message id="mesajUcusId" for="musteriUcusId" errorStyle="color:red; float: left;"/>
                 <p:commandButton value="Ekle" action="#{biletView.biletEkle()}"
-                                 update="@all" process="@all"/>
+                                 update="@all" process="@all" />
             </h:panelGrid>
         </p:panel>
     </h:form>
@@ -56,7 +61,12 @@
                 Biletler
             </f:facet>
             <p:dataTable var="biletler" value="#{biletView.biletler}"
-                         rows="5" paginator="true" rowIndexVar="index" id="datatable">
+                         rows="20" paginator="true" rowIndexVar="index"
+                         id="datatable" emptyMessage="Veri yoktur."
+                         sortBy="#{biletler.fiyat}" sortOrder="ascending"
+                         currentPageReportTemplate="{currentPage} - {totalPages}"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                               {PageLinks} {NextPageLink} {LastPageLink}">
                 <p:column headerText="No" width="10%">
                     <h:commandLink value="#{index + 1}" action="#{biletView.biletDetail(biletler.id)}"/>
                 </p:column>
@@ -65,11 +75,11 @@
                     <h:outputText value="#{biletler.musteri_isim}"/>
                 </p:column>
 
-                <p:column headerText="Fiyat" sortBy="#{biletler.fiyat}">
+                <p:column headerText="Fiyat">
                     <h:outputText value="#{biletler.fiyat}"/>
                 </p:column>
 
-                <p:column headerText="Uçuş Id" sortBy="#{biletler.ucus_id}">
+                <p:column headerText="Uçuş Id">
                     <h:outputText value="#{biletler.ucus_id}"/>
                 </p:column>
 
